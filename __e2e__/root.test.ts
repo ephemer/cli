@@ -41,6 +41,26 @@ test('works when Gradle is run outside of the project hierarchy', async () => {
    */
   const gradleWrapper = path.join(androidProjectRoot, 'gradlew');
 
+  const {stdout: installPackagesStdout} = await spawnScript(
+    'yarn',
+    ['install'],
+    {
+      cwd: path.join(DIR, 'TestProject'),
+    },
+  );
+
+  console.log(installPackagesStdout);
+
+  const {stdout: nodeModulesBin} = await spawnScript(
+    'ls',
+    ['node_modules/.bin'],
+    {
+      cwd: path.join(DIR, 'TestProject'),
+    },
+  );
+
+  console.log(nodeModulesBin);
+
   // Make sure that we use `-bin` distribution of Gradle
   await spawnScript(gradleWrapper, ['wrapper', '--distribution-type', 'bin'], {
     cwd: androidProjectRoot,
