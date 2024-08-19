@@ -61,6 +61,16 @@ test('works when Gradle is run outside of the project hierarchy', async () => {
 
   console.log(nodeModulesBin);
 
+  const {stdout: packageJson} = await spawnScript(
+    'cat',
+    ['node_modules/@react-native-community/cli/package.json'],
+    {
+      cwd: path.join(DIR, 'TestProject'),
+    },
+  );
+
+  console.log(packageJson);
+
   // Make sure that we use `-bin` distribution of Gradle
   await spawnScript(gradleWrapper, ['wrapper', '--distribution-type', 'bin'], {
     cwd: androidProjectRoot,
