@@ -46,6 +46,18 @@ test('works when Gradle is run outside of the project hierarchy', async () => {
     cwd: androidProjectRoot,
   });
 
+  const {stdout: configStdout} = spawnScript(
+    `npx`,
+    ['@react-native-community/cli', 'config'],
+    {
+      cwd: androidProjectRoot,
+    },
+  );
+
+  console.log({
+    configStdout,
+  });
+
   // Execute `gradle` with `-p` flag and `cwd` outside of project hierarchy
   const {stdout} = spawnScript(gradleWrapper, ['-p', androidProjectRoot], {
     cwd: '/',
